@@ -1,0 +1,8 @@
+<bobby isGood = true color = "#fff">
+    <blessing isGood = "true" color = "#00f"/>
+    <Sandra isGood = "false" color = "#0f0" user = {"name" : "Okelekele", "surname" : "Nobel",}>
+            <Beans cup = 5 ingredients = ["onions", "peppers", "salt", false, {"id" : "abc", "number" : 2,}] />
+            <Beans cup = 5 ingredients = ["onions", "peppers", "salt", false, {"id" : "abc", "number" : 2,}] />
+            <Beans cup = 5 ingredients = ["onions", "peppers", "salt", false, {"id" : "abc", "number" : 2,}] />
+    </Sandra>
+</bobby>
