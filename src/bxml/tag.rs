@@ -74,6 +74,9 @@ impl Tag{
         return ParserResult{ errors, tags};
     }
 
+    pub fn get_name(&self)->&str{ self.name.as_ref() }
+    pub fn set_name(&mut self, name: &str){ self.name = String::from(name); }
+
     pub fn make_parent(&mut self){ self.tag_type = Tagtype::new();}
 
     pub fn is_parent(&self)->bool{

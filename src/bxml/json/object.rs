@@ -1,3 +1,4 @@
+use crate::bxml::json::JSonItemType;
 use std::collections::hash_map::Iter;
 use crate::bxml::JSonArray;
 use crate::bxml::json::JSonPrimitive;
@@ -18,9 +19,7 @@ impl JSonObject{
 }
 
 impl JSonItem for JSonObject{
-    fn is_primitive(&self)->bool{ false }
-    fn is_object(&self)->bool{ true }
-    fn is_array(&self)->bool{ false }
+    fn is_type(&self)->JSonItemType {JSonItemType::Object}
 
     fn as_primitive(&self)->Option<&JSonPrimitive>{ None }
     fn as_object(&self)->Option<&JSonObject>{ Some(self) }

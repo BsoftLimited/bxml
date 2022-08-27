@@ -1,3 +1,4 @@
+use crate::bxml::json::JSonItemType;
 use crate::bxml::json::JSonPrimitive;
 use std::slice::Iter;
 use crate::bxml::JSonObject;
@@ -17,9 +18,7 @@ impl JSonArray{
 }
 
 impl JSonItem for JSonArray{
-    fn is_primitive(&self)->bool{ false }
-    fn is_object(&self)->bool{ false }
-    fn is_array(&self)->bool{ true }
+    fn is_type(&self)->JSonItemType {JSonItemType::Array}
 
     fn as_primitive(&self)->Option<&JSonPrimitive>{ None }
     fn as_object(&self)->Option<&JSonObject>{ None }

@@ -19,6 +19,15 @@ fn main() {
             }
             for tag in result.tags{
                 println!("{}", tag.to_string());
+                for attr in tag.get_attributes(){
+                    println!("attribute {} = {}", attr.0, attr.1.as_primitive().unwrap().as_string())
+                }
+
+                if let Some(children) = tag.get_children(){
+                    for child in children{
+                        println!("child: {}", child.get_name());
+                    }
+                }
             }
         },
         Err(error)=>{ print!("{}", error); }

@@ -6,10 +6,10 @@ pub use array::JSonArray;
 pub use object::JSonObject;
 pub use primitive::JSonPrimitive;
 
+pub enum JSonItemType{ Primitive, Object, Array, None }
+
 pub trait JSonItem{
-    fn is_primitive(&self)->bool;
-    fn is_object(&self)->bool;
-    fn is_array(&self)->bool;
+    fn is_type(&self)->JSonItemType;
 
     fn as_primitive(&self)->Option<&JSonPrimitive>;
     fn as_object(&self)->Option<&JSonObject>;
@@ -25,7 +25,7 @@ pub trait JSon<T> : JSonItem{
 
     fn get_number(&self, key: T) -> Option<f32> {
         if let Option::Some(init) = self.get(key){
-            if init.is_primitive(){
+            if let JSonItemType::Primitive =  init.is_type(){
                 return init.as_primitive().unwrap().as_number();
             }
         }
@@ -34,7 +34,7 @@ pub trait JSon<T> : JSonItem{
 
     fn get_string(&self, key: T) -> std::option::Option<&str> { 
         if let Option::Some(init) = self.get(key){
-            if init.is_primitive(){
+            if let JSonItemType::Primitive =  init.is_type(){
                 return Some(init.as_primitive().unwrap().as_string());
             }
         }
@@ -43,8 +43,17 @@ pub trait JSon<T> : JSonItem{
 
     fn get_boolean(&self, key:T) -> std::option::Option<bool> { 
         if let Option::Some(init) = self.get(key){
-            if init.is_primitive(){
+            if let JSonItemType::Primitive =  init.is_type(){
                 return Some(init.as_primitive().unwrap().as_boolean());
+            }
+        }
+        return None;
+    }
+
+    fn get_primitive(&self, key:T) -> std::option::Option<&JSonPrimitive> { 
+        if let Option::Some(init) = self.get(key){
+            if let JSonItemType::Primitive =  init.is_type(){
+                return init.as_primitive();
             }
         }
         return None;
@@ -52,7 +61,7 @@ pub trait JSon<T> : JSonItem{
     
     fn get_object(&self, key:T) -> Option<&JSonObject> { 
         if let Option::Some(init) = self.get(key){
-            if init.is_object(){
+            if let JSonItemType::Object =  init.is_type(){
                 return init.as_object();
             }
         }
@@ -61,7 +70,7 @@ pub trait JSon<T> : JSonItem{
     
     fn get_array(&self, key:T) -> Option<&JSonArray> {
         if let Option::Some(init) = self.get(key){
-            if init.is_array(){
+            if let JSonItemType::Array =  init.is_type(){
                 return init.as_array();
             }
         }
@@ -71,9 +80,7 @@ pub trait JSon<T> : JSonItem{
 
 pub struct JSonNone;
 impl JSonItem for JSonNone{
-    fn is_primitive(&self)->bool{ false }
-    fn is_object(&self)->bool{ false }
-    fn is_array(&self)->bool{ false }
+    fn is_type(&self)->JSonItemType{ JSonItemType::None }
 
     fn as_primitive(&self)->Option<&JSonPrimitive>{ None}
     fn as_object(&self)->Option<&JSonObject>{ None }

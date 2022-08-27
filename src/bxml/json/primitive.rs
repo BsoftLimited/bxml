@@ -1,3 +1,4 @@
+use crate::bxml::json::JSonItemType;
 use crate::bxml::JSonArray;
 use crate::bxml::JSonObject;
 use crate::bxml::JSonItem;
@@ -27,10 +28,8 @@ impl JSonPrimitive{
 }
 
 impl JSonItem for JSonPrimitive{
-    fn is_primitive(&self)->bool{ true }
-    fn is_object(&self)->bool{ false }
-    fn is_array(&self)->bool{ false }
-
+    fn is_type(&self)->JSonItemType { JSonItemType::Primitive }
+    
     fn as_primitive(&self)->Option<&JSonPrimitive>{ Some(self) }
     fn as_object(&self)->Option<&JSonObject>{ None }
     fn as_array(&self)->Option<&JSonArray>{ None }
